@@ -1,35 +1,17 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import {Shallow} from 'shallow-render';
 import { AppComponent } from './app.component';
+import {AppModule} from 'src/app/app.module';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  }));
+  let shallow: Shallow<AppComponent>;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    shallow = new Shallow(AppComponent, AppModule);
   });
 
-  it(`should have as title 'ng9-shallow-test'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('ng9-shallow-test');
-  });
+  it('should render title', async () => {
+    const {find} = await shallow.render();
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('ng9-shallow-test app is running!');
+    expect(find('#title').nativeElement.textContent).toContain('ng9-shallow-test app is running!');
   });
 });
