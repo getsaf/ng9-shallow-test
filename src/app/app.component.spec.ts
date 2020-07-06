@@ -1,6 +1,6 @@
-import {Shallow} from 'shallow-render';
+import { Shallow } from 'shallow-render';
 import { AppComponent } from './app.component';
-import {AppModule} from 'src/app/app.module';
+import { AppModule } from 'src/app/app.module';
 
 describe('AppComponent', () => {
   let shallow: Shallow<AppComponent>;
@@ -10,8 +10,12 @@ describe('AppComponent', () => {
   });
 
   it('should render title', async () => {
-    const {find} = await shallow.render();
+    const { find } = await shallow.render({
+      bind: { myInput: 'My Test Input' },
+    });
 
-    expect(find('#title').nativeElement.textContent).toContain('ng9-shallow-test app is running!');
+    expect(find('.myInput').nativeElement.textContent).toContain(
+      'My Test Input'
+    );
   });
 });
